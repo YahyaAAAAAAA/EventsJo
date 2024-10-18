@@ -50,7 +50,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Abel',
-          scaffoldBackgroundColor: MyColors.beige,
+          scaffoldBackgroundColor: MyColors.scaffoldBg,
+          appBarTheme: AppBarTheme(
+            backgroundColor: MyColors.appBarBg,
+          ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(
           builder: (context, authState) {

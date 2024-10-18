@@ -50,15 +50,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text(
-        //   "Greetings ${currentUser!.name.toCapitalized}\n choose which category you would like to book.",
-        //   style: TextStyle(color: MyColors.black, fontSize: 20),
-        //   textAlign: TextAlign.center,
-        // ),
-        // toolbarHeight: 100.0,
-        // centerTitle: true,
-        backgroundColor: MyColors.beige,
-      ),
+          // title: Text(
+          //   "Greetings ${currentUser!.name.toCapitalized}\n choose which category you would like to book.",
+          //   style: TextStyle(color: MyColors.black, fontSize: 20),
+          //   textAlign: TextAlign.center,
+          // ),
+          // toolbarHeight: 100.0,
+          // centerTitle: true,
+          ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(

@@ -1,4 +1,3 @@
-import 'package:events_jo/config/haversine.dart';
 import 'package:events_jo/config/my_colors.dart';
 import 'package:events_jo/config/my_progress_indicator.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
@@ -17,32 +16,19 @@ class WeddingVenuesPage extends StatefulWidget {
 
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   late List<WeddingVenue> weddingVenuList = [];
-  Haversine haversine = Haversine();
-
-  void sortFromClosest() {
-    //same list but sorted from closest to furtherest from the user (as json)
-    List sortedList = haversine.getSortedLocations(32.05686218187307,
-        36.12490100936145, weddingVenuList.map((e) => e.toJson()).toList());
-
-    //convert sorted list to wedding venue
-    weddingVenuList = sortedList.map((e) => WeddingVenue.fromJson(e)).toList();
-  }
-
-  void sortAlpha() {
-    weddingVenuList.sort(
-      (a, b) => a.name.trim()[0].compareTo(b.name.trim()[0]),
-    );
-  }
+  late final WeddingVenueCubit cubit;
 
   @override
   void initState() {
     super.initState();
 
+    //get cubit
+    cubit = context.read<WeddingVenueCubit>();
+
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) async {
-        //get original list from the database
-        weddingVenuList =
-            await context.read<WeddingVenueCubit>().getAllVenues();
+        //get original list
+        weddingVenuList = await cubit.getAllVenues();
       },
     );
   }
@@ -51,14 +37,11 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: MyColors.beige,
         actions: [
           TextButton(
               onPressed: () {
-                setState(() {
-                  // sortFromClosest();
-                  sortAlpha();
-                });
+                cubit.sortFromClosest(weddingVenuList);
+                // cubit.sortAlpha(weddingVenuList);
               },
               child: const Icon(Icons.sort))
         ],
@@ -82,7 +65,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
                 return WeddingVenueCard(weddingVenue: weddingVenuList[index]);
               },
             );
-          } else {
+          }
+          //error state
+          else {
             return const Center(
               child: Text('Error getting venues list'),
             );

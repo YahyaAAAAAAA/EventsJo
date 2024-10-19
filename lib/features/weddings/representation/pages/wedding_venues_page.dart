@@ -1,6 +1,7 @@
 import 'package:events_jo/config/my_colors.dart';
 import 'package:events_jo/config/my_progress_indicator.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/representation/components/my_search_bar.dart';
 import 'package:events_jo/features/weddings/representation/components/wedding_venue_card.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_states.dart';
@@ -16,7 +17,9 @@ class WeddingVenuesPage extends StatefulWidget {
 
 class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   late List<WeddingVenue> weddingVenuList = [];
+  late List<WeddingVenue> filterdWeddingVenuList = [];
   late final WeddingVenueCubit cubit;
+  final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -37,15 +40,35 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(
+          'Wedding Venues in Jordan',
+          style: TextStyle(
+            color: MyColors.black,
+          ),
+        ),
+        centerTitle: true,
         actions: [
           TextButton(
-              onPressed: () {
-                cubit.sortFromClosest(weddingVenuList);
-                // cubit.sortAlpha(weddingVenuList);
-              },
-              child: const Icon(Icons.sort))
+            onPressed: () {
+              cubit.sortFromClosest(weddingVenuList);
+              // cubit.sortAlpha(weddingVenuList);
+            },
+            child: const Icon(
+              Icons.sort,
+            ),
+          )
         ],
+        //override back button
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: MyColors.black,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.transparent,
       ),
+      //states
       body: BlocConsumer<WeddingVenueCubit, WeddingVenueStates>(
         builder: (context, state) {
           //loading...
@@ -59,11 +82,31 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
 
           //list ready
           if (state is WeddingVenueLoaded) {
-            return ListView.builder(
-              itemCount: weddingVenuList.length,
-              itemBuilder: (context, index) {
-                return WeddingVenueCard(weddingVenue: weddingVenuList[index]);
-              },
+            return Column(
+              children: [
+                //search bar
+                MySearchBar(
+                  controller: searchController,
+                  onPressed: () => setState(() => searchController.clear()),
+                  onChanged: (venue) => cubit.searchList(
+                      weddingVenuList, filterdWeddingVenuList, venue),
+                ),
+                //venues list
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: searchController.text.isEmpty
+                        ? weddingVenuList.length
+                        : filterdWeddingVenuList.length,
+                    itemBuilder: (context, index) {
+                      return WeddingVenueCard(
+                        weddingVenue: searchController.text.isEmpty
+                            ? weddingVenuList[index]
+                            : filterdWeddingVenuList[index],
+                      );
+                    },
+                  ),
+                ),
+              ],
             );
           }
           //error state

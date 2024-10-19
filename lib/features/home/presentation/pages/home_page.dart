@@ -2,7 +2,9 @@ import 'package:events_jo/config/custom_icons_icons.dart';
 import 'package:events_jo/config/my_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
+import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
+import 'package:events_jo/features/home/presentation/components/my_drawer.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
@@ -50,29 +52,49 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // title: Text(
-          //   "Greetings ${currentUser!.name.toCapitalized}\n choose which category you would like to book.",
-          //   style: TextStyle(color: MyColors.black, fontSize: 20),
-          //   textAlign: TextAlign.center,
-          // ),
-          // toolbarHeight: 100.0,
-          // centerTitle: true,
+        //dev might change later
+        toolbarHeight: 100,
+        title: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: MyColors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.person,
+                color: MyColors.black,
+              ),
+              const SizedBox(width: 5),
+              Text(currentUser!.name.toCapitalized),
+            ],
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            //logo
+            const EventsJoLogo(),
+
             const SizedBox(height: 50),
 
             //welocme text
             Text(
-              "Greetings ${currentUser!.name.toCapitalized}\n Choose which category you would like to book",
-              style: TextStyle(color: MyColors.black, fontSize: 22),
+              "Choose which category you would like to book",
+              style: TextStyle(
+                color: MyColors.black,
+                fontSize: 22,
+              ),
               textAlign: TextAlign.center,
             ),
 
-            const Spacer(),
+            const SizedBox(height: 25),
 
             //weddings card -> to weddings page
             HomeCard(
@@ -114,11 +136,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-            const Spacer(),
+            const Spacer(flex: 3),
           ],
         ),
       ),
-      // drawer: const MyDrawer(),
+      drawer: const MyDrawer(),
     );
   }
 }

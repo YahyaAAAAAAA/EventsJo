@@ -2,6 +2,7 @@ import 'package:events_jo/features/auth/representation/components/my_button.dart
 import 'package:events_jo/features/auth/representation/components/my_text_field.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/config/my_colors.dart';
+import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,12 +60,10 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                //todo logo
-                // Icon(
-                //   Icons.cake,
-                //   size: 70,
-                //   color: MyColors.black,
-                // ),
+                // logo
+                const EventsJoLogo(),
+
+                const SizedBox(height: 25),
 
                 //welcome back message
                 Text(
@@ -107,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       'Don\'t have an account ?',
                       style: TextStyle(
-                        color: MyColors.gray,
+                        color: MyColors.black,
                         fontSize: 17,
                       ),
                     ),
@@ -117,13 +116,13 @@ class _LoginPageState extends State<LoginPage> {
                         ' Register now!',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: MyColors.gray,
+                          color: MyColors.red,
                           fontSize: 17,
                         ),
                       ),
                     ),
                   ],
-                )
+                ),
               ],
             ),
           ),

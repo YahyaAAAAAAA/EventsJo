@@ -10,7 +10,7 @@ class WeddingVenueCard extends StatelessWidget {
     super.key,
     required this.weddingVenue,
   });
-  //TODO MAKE NEW CARD DESIGN FIRST THING TMRO
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,19 +18,47 @@ class WeddingVenueCard extends StatelessWidget {
       child: Row(
         children: [
           //* image
-          SizedBox(
-            height: 100,
+          Container(
+            height: 110,
+            padding: const EdgeInsets.all(6),
+            decoration: BoxDecoration(
+                color: MyColors.white,
+                borderRadius: BorderRadius.circular(5),
+                //dev might change later
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.red.withOpacity(0.05),
+                    blurRadius: 20,
+                    offset: const Offset(2, 2),
+                  ),
+                  BoxShadow(
+                    color: Colors.red.withOpacity(0.05),
+                    blurRadius: 20,
+                    offset: const Offset(-2, -2),
+                  ),
+                ]),
+            // width: 100,
             child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(5), topLeft: Radius.circular(5)),
+              borderRadius: BorderRadius.circular(5),
+              //display preview image
               child: CachedNetworkImage(
-                imageUrl: "https://i.ibb.co/syL2vn2/unnamed.jpg",
-                placeholder: (context, url) =>
-                    MyProgressIndicator(color: MyColors.lightYellow),
-                errorWidget: (context, url, error) => Icon(
-                  Icons.error,
-                  color: MyColors.beige,
-                  size: 30,
+                imageUrl: weddingVenue.pics[0],
+                //waiting for image
+                placeholder: (context, url) => SizedBox(
+                  width: 100,
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: MyProgressIndicator(color: MyColors.black),
+                  ),
+                ),
+                //error getting image
+                errorWidget: (context, url, error) => SizedBox(
+                  width: 100,
+                  child: Icon(
+                    Icons.error_outline,
+                    color: MyColors.black,
+                    size: 40,
+                  ),
                 ),
                 fit: BoxFit.scaleDown,
               ),
@@ -43,7 +71,7 @@ class WeddingVenueCard extends StatelessWidget {
               height: 100,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: MyColors.gray,
+                color: MyColors.white,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +80,7 @@ class WeddingVenueCard extends StatelessWidget {
                   Text(
                     weddingVenue.name,
                     style: TextStyle(
-                      color: MyColors.lightYellow,
+                      color: MyColors.black,
                       fontSize: 22,
                     ),
                   ),
@@ -61,14 +89,16 @@ class WeddingVenueCard extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.circle,
-                        color: MyColors.green,
+                        color: weddingVenue.isOpen
+                            ? MyColors.greenShade3
+                            : MyColors.redShade3,
                         size: 16,
                       ),
                       const SizedBox(width: 5),
                       Text(
-                        "Available",
+                        weddingVenue.isOpen ? "Available" : "Full",
                         style: TextStyle(
-                          color: MyColors.lightYellow,
+                          color: MyColors.black,
                           fontSize: 16,
                         ),
                       ),
@@ -79,27 +109,37 @@ class WeddingVenueCard extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.star,
-                        color: MyColors.lightYellow,
+                        color: weddingVenue.rate >= 1
+                            ? MyColors.fullRate
+                            : MyColors.emptyRate,
                         size: 20,
                       ),
                       Icon(
                         Icons.star,
-                        color: MyColors.lightYellow,
+                        color: weddingVenue.rate >= 2
+                            ? MyColors.fullRate
+                            : MyColors.emptyRate,
                         size: 20,
                       ),
                       Icon(
                         Icons.star,
-                        color: MyColors.lightYellow,
+                        color: weddingVenue.rate >= 3
+                            ? MyColors.fullRate
+                            : MyColors.emptyRate,
                         size: 20,
                       ),
                       Icon(
                         Icons.star,
-                        color: MyColors.gray2,
+                        color: weddingVenue.rate >= 4
+                            ? MyColors.fullRate
+                            : MyColors.emptyRate,
                         size: 20,
                       ),
                       Icon(
                         Icons.star,
-                        color: MyColors.gray2,
+                        color: weddingVenue.rate >= 5
+                            ? MyColors.fullRate
+                            : MyColors.emptyRate,
                         size: 20,
                       ),
                     ],
@@ -117,7 +157,7 @@ class WeddingVenueCard extends StatelessWidget {
                 bottomRight: Radius.circular(10),
                 topRight: Radius.circular(10),
               ),
-              color: MyColors.gray,
+              color: MyColors.white,
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -129,12 +169,11 @@ class WeddingVenueCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  overlayColor: WidgetStatePropertyAll(MyColors.gray2),
-                  backgroundColor: WidgetStatePropertyAll(MyColors.black),
+                  backgroundColor: WidgetStatePropertyAll(MyColors.red),
                 ),
                 child: Icon(
-                  Icons.arrow_forward,
-                  color: MyColors.lightYellow,
+                  Icons.arrow_forward_ios,
+                  color: MyColors.white,
                 ),
               ),
             ),

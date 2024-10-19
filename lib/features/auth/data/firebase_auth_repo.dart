@@ -85,11 +85,16 @@ class FirebaseAuthRepo implements AuthRepo {
     //current user
     final firebaseUser = firebaseAuth.currentUser;
 
+    //user doesn't exist
+    if (firebaseUser == null) {
+      return '';
+    }
+
     //access users
     final collection = FirebaseFirestore.instance.collection('users');
 
     //get data fields as json
-    final docSnapshot = await collection.doc(firebaseUser!.uid).get();
+    final docSnapshot = await collection.doc(firebaseUser.uid).get();
 
     if (docSnapshot.exists) {
       Map<String, dynamic> data = docSnapshot.data()!;

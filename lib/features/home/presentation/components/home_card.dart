@@ -15,51 +15,62 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      height: 100,
-      decoration: BoxDecoration(
-        color: MyColors.gray,
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 25),
-            child: Icon(
-              icon,
-              color: MyColors.beige,
-              size: 30,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(
+          Icons.circle,
+          color: MyColors.white,
+          size: 13,
+        ),
+        const SizedBox(height: 10),
+        Container(
+          padding: const EdgeInsets.all(10),
+          height: 100,
+          decoration: BoxDecoration(
+            color: MyColors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-          Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.normal,
-                color: MyColors.lightYellow,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 25),
+                child: Icon(
+                  icon,
+                  color: MyColors.black,
+                  size: 30,
+                ),
               ),
-            ),
-          ),
-          IconButton(
-            onPressed: onPressed,
-            style: ButtonStyle(
-                shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Center(
+                child: Text(
+                  text,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: MyColors.black,
                   ),
                 ),
-                padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-                backgroundColor: WidgetStatePropertyAll(MyColors.black)),
-            icon: Icon(
-              Icons.arrow_forward,
-              color: MyColors.lightYellow,
-            ),
+              ),
+              IconButton(
+                onPressed: onPressed,
+                style: ButtonStyle(
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
+                    backgroundColor: WidgetStatePropertyAll(MyColors.red)),
+                icon: const Icon(
+                  Icons.arrow_forward_ios,
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

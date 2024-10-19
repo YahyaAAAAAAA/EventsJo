@@ -15,7 +15,7 @@ class MyButton extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: MyColors.gray,
+        color: MyColors.white,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -28,7 +28,7 @@ class MyButton extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 21,
                   fontWeight: FontWeight.normal,
-                  color: MyColors.lightYellow,
+                  color: MyColors.black,
                 ),
               ),
             ),
@@ -42,10 +42,10 @@ class MyButton extends StatelessWidget {
                   ),
                 ),
                 padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-                backgroundColor: WidgetStatePropertyAll(MyColors.black)),
+                backgroundColor: WidgetStatePropertyAll(MyColors.red)),
             icon: Icon(
-              Icons.arrow_forward,
-              color: MyColors.beige,
+              Icons.arrow_forward_ios,
+              color: MyColors.gray,
             ),
           ),
         ],

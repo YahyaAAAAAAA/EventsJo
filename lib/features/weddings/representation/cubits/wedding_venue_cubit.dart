@@ -11,6 +11,7 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
   WeddingVenueCubit({required this.weddingVenueRepo})
       : super(WeddingVenueInit());
 
+  //get all venues from database
   Future<List<WeddingVenue>> getAllVenues() async {
     emit(WeddingVenueLoading());
 
@@ -20,6 +21,29 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     return weddingVenuesList;
   }
 
+  //search given list
+  List<WeddingVenue> searchList(List<WeddingVenue> weddingVenueList,
+      List<WeddingVenue> filterdWeddingVenuList, String venue) {
+    //loading...
+    emit(WeddingVenueLoading());
+
+    //ensure list clear
+    filterdWeddingVenuList.clear();
+
+    //start filtering
+    filterdWeddingVenuList.addAll(weddingVenueList
+        .where(
+          (character) => character.name.toLowerCase().contains(venue),
+        )
+        .toList());
+
+    //done
+    emit(WeddingVenueLoaded());
+
+    return weddingVenueList;
+  }
+
+  //sort given list alphapetically
   List<WeddingVenue> sortAlpha(List<WeddingVenue> weddingVenuList) {
     //loading..
     emit(WeddingVenueLoading());
@@ -29,12 +53,13 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
       (a, b) => a.name.trim()[0].compareTo(b.name.trim()[0]),
     );
 
-    //state
+    //done
     emit(WeddingVenueLoaded());
 
     return weddingVenuList;
   }
 
+  //sort given list based on the user's location
   List<WeddingVenue> sortFromClosest(List<WeddingVenue> weddingVenuList) {
     //loading..
     emit(WeddingVenueLoading());
@@ -43,14 +68,14 @@ class WeddingVenueCubit extends Cubit<WeddingVenueStates> {
     List sortedList = haversine.getSortedLocations(32.05686218187307,
         36.12490100936145, weddingVenuList.map((e) => e.toJson()).toList());
 
-    //clear list
+    //ensure list clear
     weddingVenuList.clear();
 
     //convert sorted list to wedding venue and add it
     weddingVenuList
         .addAll(sortedList.map((e) => WeddingVenue.fromJson(e)).toList());
 
-    //state
+    //done
     emit(WeddingVenueLoaded());
 
     return weddingVenuList;

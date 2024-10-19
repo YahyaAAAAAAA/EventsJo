@@ -12,4 +12,6 @@ class CustomIcons {
       IconData(0xe83f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData wedding =
       IconData(0xe840, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData eventsjo =
+      IconData(0xe843, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

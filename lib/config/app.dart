@@ -53,6 +53,12 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: MyColors.scaffoldBg,
           appBarTheme: AppBarTheme(
             backgroundColor: MyColors.appBarBg,
+            iconTheme: IconThemeData(
+              color: MyColors.black,
+            ),
+          ),
+          iconTheme: IconThemeData(
+            color: MyColors.gray,
           ),
         ),
         home: BlocConsumer<AuthCubit, AuthStates>(

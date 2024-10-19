@@ -3,12 +3,18 @@ class WeddingVenue {
   late String openTime;
   late String latitude;
   late String longitude;
+  late int rate;
+  late bool isOpen;
+  late List<dynamic> pics;
 
   WeddingVenue({
     required this.name,
     required this.openTime,
     required this.latitude,
     required this.longitude,
+    required this.rate,
+    required this.isOpen,
+    required this.pics,
   });
 
   //convert wedding venue to json
@@ -18,6 +24,9 @@ class WeddingVenue {
       'openTime': openTime,
       'latitude': latitude,
       'longitude': longitude,
+      'rate': rate,
+      'isOpen': isOpen,
+      'pics': pics,
     };
   }
 
@@ -27,5 +36,8 @@ class WeddingVenue {
     openTime = jsonVenue['openTime'];
     latitude = jsonVenue['latitude'];
     longitude = jsonVenue['longitude'];
+    rate = jsonVenue['rate'];
+    isOpen = jsonVenue['isOpen'];
+    pics = jsonVenue['pics'];
   }
 }

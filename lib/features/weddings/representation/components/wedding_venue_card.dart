@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:events_jo/config/my_colors.dart';
 import 'package:events_jo/config/my_progress_indicator.dart';
 import 'package:events_jo/features/weddings/domain/entities/wedding_venue.dart';
+import 'package:events_jo/features/weddings/representation/components/rating_venues.dart';
+import 'package:events_jo/features/weddings/representation/pages/wedding_venues_detailes_page.dart';
 import 'package:flutter/material.dart';
 
 class WeddingVenueCard extends StatelessWidget {
@@ -10,6 +12,35 @@ class WeddingVenueCard extends StatelessWidget {
     super.key,
     required this.weddingVenue,
   });
+
+  //dev move this to the cubit
+  List<CachedNetworkImage> addPicsToList() {
+    List<CachedNetworkImage> picsList = [];
+    for (int i = 0; i < weddingVenue.pics.length; i++) {
+      picsList.add(CachedNetworkImage(
+        imageUrl: weddingVenue.pics[i],
+        //waiting for image
+        placeholder: (context, url) => SizedBox(
+          width: 100,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: MyProgressIndicator(color: MyColors.black),
+          ),
+        ),
+        //error getting image
+        errorWidget: (context, url, error) => SizedBox(
+          width: 100,
+          child: Icon(
+            Icons.error_outline,
+            color: MyColors.black,
+            size: 40,
+          ),
+        ),
+        fit: BoxFit.fill,
+      ));
+    }
+    return picsList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,45 +136,7 @@ class WeddingVenueCard extends StatelessWidget {
                     ],
                   ),
                   //* rating
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: weddingVenue.rate >= 1
-                            ? MyColors.fullRate
-                            : MyColors.emptyRate,
-                        size: 20,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: weddingVenue.rate >= 2
-                            ? MyColors.fullRate
-                            : MyColors.emptyRate,
-                        size: 20,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: weddingVenue.rate >= 3
-                            ? MyColors.fullRate
-                            : MyColors.emptyRate,
-                        size: 20,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: weddingVenue.rate >= 4
-                            ? MyColors.fullRate
-                            : MyColors.emptyRate,
-                        size: 20,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: weddingVenue.rate >= 5
-                            ? MyColors.fullRate
-                            : MyColors.emptyRate,
-                        size: 20,
-                      ),
-                    ],
-                  ),
+                  VenuesRating(weddingVenue: weddingVenue, size: 20),
                 ],
               ),
             ),
@@ -161,8 +154,17 @@ class WeddingVenueCard extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
+              //navigate to details page
               child: TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => WeddingVenuesDetailesPage(
+                      weddingVenue: weddingVenue,
+                      picsList: addPicsToList(),
+                    ),
+                  ),
+                ),
                 style: ButtonStyle(
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(

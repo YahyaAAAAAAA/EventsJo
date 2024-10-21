@@ -1,30 +1,27 @@
+import 'dart:ui';
+
 import 'package:events_jo/config/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
   final String text;
-  final IconData icon;
+  final String image;
+  final double width;
   final void Function()? onPressed;
 
   const HomeCard({
     super.key,
     required this.text,
-    required this.icon,
+    required this.image,
+    required this.width,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+    return Stack(
+      alignment: Alignment.bottomLeft,
       children: [
-        Icon(
-          Icons.circle,
-          color: MyColors.white,
-          size: 13,
-        ),
-        const SizedBox(height: 10),
         Container(
           padding: const EdgeInsets.all(10),
           height: 100,
@@ -36,14 +33,7 @@ class HomeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 25),
-                child: Icon(
-                  icon,
-                  color: MyColors.black,
-                  size: 30,
-                ),
-              ),
+              const Spacer(flex: 2),
               Center(
                 child: Text(
                   text,
@@ -51,8 +41,10 @@ class HomeCard extends StatelessWidget {
                     fontSize: 22,
                     color: MyColors.black,
                   ),
+                  textAlign: TextAlign.center,
                 ),
               ),
+              const Spacer(),
               IconButton(
                 onPressed: onPressed,
                 style: ButtonStyle(
@@ -69,6 +61,10 @@ class HomeCard extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Image.asset(
+          image,
+          width: width,
         ),
       ],
     );

@@ -22,6 +22,7 @@ class WeddingVenuesDetailesPage extends StatefulWidget {
 
 class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
   late final WeddingVenue weddingVenue;
+
   @override
   void initState() {
     super.initState();

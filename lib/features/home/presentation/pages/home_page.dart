@@ -1,4 +1,3 @@
-import 'package:events_jo/config/custom_icons_icons.dart';
 import 'package:events_jo/config/my_colors.dart';
 import 'package:events_jo/features/auth/domain/entities/app_user.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         //dev might change later
-        toolbarHeight: 100,
+        surfaceTintColor: Colors.transparent,
         title: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
@@ -68,77 +67,80 @@ class _HomePageState extends State<HomePage> {
                 color: MyColors.black,
               ),
               const SizedBox(width: 5),
-              Text(currentUser!.name.toCapitalized),
+              Text(
+                currentUser!.name.toCapitalized,
+                style: TextStyle(
+                  color: MyColors.black,
+                ),
+              ),
             ],
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            //logo
-            const EventsJoLogo(),
+      body: ListView(
+        shrinkWrap: true,
+        padding: const EdgeInsets.all(20.0),
+        children: [
+          //logo
+          const EventsJoLogo(),
 
-            const SizedBox(height: 50),
+          const SizedBox(height: 10),
 
-            //welocme text
-            Text(
-              "Choose which category you would like to book",
-              style: TextStyle(
-                color: MyColors.black,
-                fontSize: 22,
-              ),
-              textAlign: TextAlign.center,
+          //welocme text
+          Text(
+            "Choose which category you would like to book",
+            style: TextStyle(
+              color: MyColors.black,
+              fontSize: 22,
             ),
+            textAlign: TextAlign.center,
+          ),
 
-            const SizedBox(height: 25),
+          const SizedBox(height: 20),
 
-            //weddings card -> to weddings page
-            HomeCard(
-              text: 'Wedding Venues',
-              icon: CustomIcons.wedding,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WeddingVenuesPage(),
-                ),
+          //weddings card -> to weddings page
+          HomeCard(
+            text: 'Wedding Venues',
+            image: 'assets/images/wedding.png',
+            width: 150,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WeddingVenuesPage(),
               ),
             ),
+          ),
 
-            const SizedBox(height: 25),
+          const SizedBox(height: 20),
 
-            //farms card -> to farms page
-            HomeCard(
-              text: 'Farms',
-              icon: CustomIcons.farm,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WeddingVenuesPage(),
-                ),
+          //farms card -> to farms page
+          HomeCard(
+            text: 'Farms',
+            image: 'assets/images/farm.png',
+            width: 110,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WeddingVenuesPage(),
               ),
             ),
+          ),
 
-            const SizedBox(height: 25),
+          const SizedBox(height: 20),
 
-            //football courtes card -> to football courtes page
-            HomeCard(
-              text: 'Football Courts',
-              icon: CustomIcons.football,
-              onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const WeddingVenuesPage(),
-                ),
+          //football courtes card -> to football courtes page
+          HomeCard(
+            text: 'Football Courts',
+            image: 'assets/images/football.png',
+            width: 150,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WeddingVenuesPage(),
               ),
             ),
-
-            const Spacer(flex: 3),
-          ],
-        ),
+          ),
+        ],
       ),
       drawer: const MyDrawer(),
     );

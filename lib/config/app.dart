@@ -3,6 +3,8 @@ import 'package:events_jo/features/auth/data/firebase_auth_repo.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/auth/representation/cubits/auth_states.dart';
 import 'package:events_jo/features/auth/representation/pages/auth_page.dart';
+import 'package:events_jo/features/location/data/geolocator_location_repo.dart';
+import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/navigation/presentation/navigation_bar.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/cubits/wedding_venue_cubit.dart';
@@ -29,6 +31,7 @@ auth state
 class MyApp extends StatelessWidget {
   final authRepo = FirebaseAuthRepo();
   final weddingVenueRepo = FirebaseWeddingVenueRepo();
+  final locationRepo = GeolocatorLocationRepo();
 
   MyApp({super.key});
 
@@ -39,6 +42,10 @@ class MyApp extends StatelessWidget {
         //auth cubit
         BlocProvider(
           create: (context) => AuthCubit(authRepo: authRepo)..checkAuth(),
+        ),
+        //location cubit
+        BlocProvider(
+          create: (context) => LocationCubit(locationRepo: locationRepo),
         ),
         //wedding venue cubit
         BlocProvider(

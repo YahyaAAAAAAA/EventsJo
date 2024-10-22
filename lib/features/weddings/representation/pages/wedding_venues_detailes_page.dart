@@ -39,6 +39,23 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
             color: MyColors.black,
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: Icon(
+              Icons.report_problem_rounded,
+              color: MyColors.black,
+            ),
+          )
+        ],
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios_new,
+            color: MyColors.black,
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        backgroundColor: Colors.transparent,
         centerTitle: true,
       ),
       body: Padding(
@@ -63,18 +80,21 @@ class _WeddingVenuesDetailesPageState extends State<WeddingVenuesDetailesPage> {
               ),
             ),
             //name and rating
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  weddingVenue.name,
-                  style: TextStyle(
-                    color: MyColors.black,
-                    fontSize: 30,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    weddingVenue.name,
+                    style: TextStyle(
+                      color: MyColors.black,
+                      fontSize: 28,
+                    ),
                   ),
-                ),
-                VenuesRating(weddingVenue: weddingVenue, size: 25),
-              ],
+                  VenuesRating(weddingVenue: weddingVenue, size: 20),
+                ],
+              ),
             ),
             //todo address and map
 

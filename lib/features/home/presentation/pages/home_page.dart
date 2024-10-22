@@ -4,10 +4,12 @@ import 'package:events_jo/features/auth/representation/cubits/auth_cubit.dart';
 import 'package:events_jo/features/home/presentation/components/events_jo_logo.dart';
 import 'package:events_jo/features/home/presentation/components/home_card.dart';
 import 'package:events_jo/features/home/presentation/components/my_drawer.dart';
+import 'package:events_jo/features/location/representation/cubits/location_cubit.dart';
 import 'package:events_jo/features/weddings/data/firebase_wedding_venue_repo.dart';
 import 'package:events_jo/features/weddings/representation/pages/wedding_venues_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +21,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final weddingVenueRepo = FirebaseWeddingVenueRepo();
   late AppUser? currentUser;
+  late Position? location;
+  //dev delete or use it later ?
+  String imgSwitch = '';
 
   @override
   void initState() {
@@ -26,9 +31,24 @@ class _HomePageState extends State<HomePage> {
 
     //get user
     currentUser = context.read<AuthCubit>().currentUser!;
+
+    //get user location
+    location = context.read<LocationCubit>().userLocation;
+
+    //dev delete
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) async {
+        print(
+          await context.read<LocationCubit>().getUserAddress(
+                latitude: location!.latitude,
+                longitude: location!.longitude,
+              ),
+        );
+      },
+    );
   }
 
-  //todo for later
+  //dev for later
   Widget addToDatabaseButton() {
     return TextButton(
       onPressed: () async {
@@ -51,7 +71,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //dev might change later
         surfaceTintColor: Colors.transparent,
         title: Container(
           padding: const EdgeInsets.all(10),
@@ -79,30 +98,40 @@ class _HomePageState extends State<HomePage> {
       ),
       body: ListView(
         shrinkWrap: true,
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
+        ),
         children: [
           //logo
           const EventsJoLogo(),
 
-          const SizedBox(height: 10),
+          //spacing
+          Divider(
+            thickness: 0.2,
+            color: MyColors.black,
+            indent: 100,
+            endIndent: 100,
+          ),
 
           //welocme text
           Text(
             "Choose which category you would like to book",
             style: TextStyle(
               color: MyColors.black,
-              fontSize: 22,
+              fontSize: 20,
             ),
             textAlign: TextAlign.center,
           ),
 
+          //spacing
           const SizedBox(height: 20),
 
           //weddings card -> to weddings page
           HomeCard(
             text: 'Wedding Venues',
-            image: 'assets/images/wedding.png',
-            width: 150,
+            subText: 'See wedding venues in Jordan',
+            image: 'assets/images/wedding_ring.png',
+            width: 110,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -111,11 +140,29 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
-          const SizedBox(height: 20),
+          //spacing
+          Divider(thickness: 0.2, color: MyColors.black),
+
+          HomeCard(
+            text: 'Personal Event',
+            subText: 'Book your own in-house event',
+            image: 'assets/images/person.png',
+            width: 100,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const WeddingVenuesPage(),
+              ),
+            ),
+          ),
+
+          //spacing
+          Divider(thickness: 0.2, color: MyColors.black),
 
           //farms card -> to farms page
           HomeCard(
             text: 'Farms',
+            subText: 'See farms in Jordan',
             image: 'assets/images/farm.png',
             width: 110,
             onPressed: () => Navigator.push(
@@ -126,13 +173,17 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
 
+          //spacing
+          Divider(thickness: 0.2, color: MyColors.black),
           const SizedBox(height: 20),
 
           //football courtes card -> to football courtes page
           HomeCard(
             text: 'Football Courts',
+            subText: 'See football courts in Jordan',
             image: 'assets/images/football.png',
-            width: 150,
+            leftPadding: 10,
+            width: 110,
             onPressed: () => Navigator.push(
               context,
               MaterialPageRoute(
@@ -140,8 +191,13 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+
+          //spacing
+          Divider(thickness: 0.2, color: MyColors.black),
         ],
       ),
+
+      //dev delete later
       drawer: const MyDrawer(),
     );
   }

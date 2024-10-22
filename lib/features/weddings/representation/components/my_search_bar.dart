@@ -19,6 +19,11 @@ class MySearchBar extends StatelessWidget {
       child: SearchBar(
         controller: controller,
         hintText: 'Search Venues...',
+        textStyle: WidgetStatePropertyAll(
+          TextStyle(
+            color: MyColors.black,
+          ),
+        ),
         elevation: const WidgetStatePropertyAll(0),
         backgroundColor: WidgetStatePropertyAll(MyColors.white),
         trailing: [

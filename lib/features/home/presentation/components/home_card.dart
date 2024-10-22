@@ -1,76 +1,104 @@
-import 'dart:ui';
-
 import 'package:events_jo/config/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeCard extends StatelessWidget {
   final String text;
+  final String subText;
   final String image;
   final double width;
+  final double leftPadding;
   final void Function()? onPressed;
 
   const HomeCard({
     super.key,
     required this.text,
+    required this.subText,
     required this.image,
     required this.width,
     required this.onPressed,
+    this.leftPadding = 0,
   });
 
   @override
   Widget build(BuildContext context) {
+    //stack to overflow image
     return Stack(
       alignment: Alignment.bottomLeft,
       children: [
-        Container(
-          padding: const EdgeInsets.all(10),
-          height: 100,
-          decoration: BoxDecoration(
-            color: MyColors.white,
-            borderRadius: BorderRadius.circular(12),
+        //* main card
+        ListTile(
+          tileColor: MyColors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              12,
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              const Spacer(flex: 2),
-              Center(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: MyColors.black,
-                  ),
-                  textAlign: TextAlign.center,
+          minVerticalPadding: 20,
+          titleAlignment: ListTileTitleAlignment.center,
+          //* title text
+          title: Text(
+            text,
+            style: TextStyle(
+              fontSize: 20,
+              color: MyColors.black,
+            ),
+          ),
+          //* spacing for image
+          leading: const SizedBox(width: 100),
+          //* subtext
+          subtitle: Text(
+            subText,
+            style: TextStyle(
+              fontSize: 15,
+              color: MyColors.black,
+            ),
+          ),
+          //* button to given page
+          trailing: IconButton(
+            onPressed: onPressed,
+            style: ButtonStyle(
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              const Spacer(),
-              IconButton(
-                onPressed: onPressed,
-                style: ButtonStyle(
-                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    padding: const WidgetStatePropertyAll(EdgeInsets.all(20)),
-                    backgroundColor: WidgetStatePropertyAll(MyColors.red)),
-                icon: const Icon(
-                  Icons.arrow_forward_ios,
-                ),
+              backgroundColor: WidgetStatePropertyAll(
+                MyColors.red,
               ),
-            ],
+            ),
+            padding: const EdgeInsets.all(10),
+            icon: const Icon(
+              Icons.arrow_forward_ios,
+              size: 30,
+            ),
           ),
         ),
-        Image.asset(
-          image,
-          width: width,
+        //* cast png shadow
+        Padding(
+          padding: EdgeInsets.only(left: leftPadding + 10),
+          child: Opacity(
+            opacity: 0.2,
+            child: Image.asset(
+              image,
+              width: width,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        //* image
+        Padding(
+          padding: EdgeInsets.only(left: leftPadding),
+          child: Image.asset(
+            image,
+            width: width,
+          ),
         ),
       ],
     );
   }
 }
 
+//extend string class -> capitlize the begging of every word
 extension StringCasingExtension on String {
   String get toCapitalized =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';

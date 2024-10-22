@@ -43,6 +43,8 @@ dependencies:
   gradient_icon: ^2.0.9
   google_nav_bar: ^5.0.6
   flutter_image_slideshow: ^0.1.6
+  geolocator: ^13.0.1
+  geocoding: ^3.0.0
 
 dev_dependencies:
   flutter_test:

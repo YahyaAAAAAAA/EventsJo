@@ -53,8 +53,9 @@ class _WeddingVenuesPageState extends State<WeddingVenuesPage> {
               cubit.sortFromClosest(weddingVenuList);
               // cubit.sortAlpha(weddingVenuList);
             },
-            child: const Icon(
-              Icons.sort,
+            child: Icon(
+              Icons.sort_by_alpha_rounded,
+              color: MyColors.black,
             ),
           )
         ],

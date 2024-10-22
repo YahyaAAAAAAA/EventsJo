@@ -108,35 +108,44 @@ class WeddingVenueCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //* title
-                  Text(
-                    weddingVenue.name,
-                    style: TextStyle(
-                      color: MyColors.black,
-                      fontSize: 22,
+                  FittedBox(
+                    child: Text(
+                      weddingVenue.name,
+                      style: TextStyle(
+                        color: MyColors.black,
+                        fontSize: 22,
+                      ),
                     ),
                   ),
                   //* available or not
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.circle,
-                        color: weddingVenue.isOpen
-                            ? MyColors.greenShade3
-                            : MyColors.redShade3,
-                        size: 16,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        weddingVenue.isOpen ? "Available" : "Full",
-                        style: TextStyle(
-                          color: MyColors.black,
-                          fontSize: 16,
+                  FittedBox(
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.circle,
+                          color: weddingVenue.isOpen
+                              ? MyColors.greenShade3
+                              : MyColors.redShade3,
+                          size: 13,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 5),
+                        Text(
+                          weddingVenue.isOpen ? "Available" : "Full",
+                          style: TextStyle(
+                            color: MyColors.black,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   //* rating
-                  VenuesRating(weddingVenue: weddingVenue, size: 20),
+                  FittedBox(
+                    child: VenuesRating(
+                      weddingVenue: weddingVenue,
+                      size: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
